@@ -1,4 +1,5 @@
 import 'package:drive_ui/data.dart';
+import 'package:drive_ui/misc/drawer.dart';
 import 'package:drive_ui/profiles/user.dart';
 import 'package:flutter/material.dart';
 
@@ -11,19 +12,26 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late int currentPage = 0;
+  GlobalKey<ScaffoldState> scaffolKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      key: scaffolKey,
+      drawer: ClipRRect(
+          borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(15), bottomRight: Radius.circular(15)),
+          child: drawDrawer(context)),
       // NestedScrollView so the top search bar can disappear
       body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
+                automaticallyImplyLeading: false,
                 toolbarHeight: screenHeight * (8 / 100),
                 backgroundColor: const Color.fromARGB(0, 0, 0, 0),
-                flexibleSpace: displayTopBar(context),
+                flexibleSpace: displayTopBar(context, scaffolKey),
               )
             ];
           },
@@ -51,7 +59,7 @@ class _HomeState extends State<Home> {
   }
 }
 
-Widget displayTopBar(context) {
+Widget displayTopBar(context, GlobalKey<ScaffoldState> key) {
   double screenWidth = MediaQuery.of(context).size.width;
   double screenHeight = MediaQuery.of(context).size.height;
   //Padding the whole top bar stack and creating it
@@ -67,7 +75,9 @@ Widget displayTopBar(context) {
           // Left menu button
           IconButton(
             iconSize: screenWidth * (6 / 100),
-            onPressed: () {}, //FILL ON PRESS//FILL ON PRESS//FILL ON PRESS
+            onPressed: () {
+              key.currentState?.openDrawer();
+            }, //FILL ON PRESS//FILL ON PRESS//FILL ON PRESS
             icon: const Icon(
               Icons.menu,
               color: Color.fromARGB(255, 41, 45, 48),
@@ -76,21 +86,25 @@ Widget displayTopBar(context) {
           // Right profile button
           Positioned(
               top: 0,
+              right: 2,
+              bottom: 0,
+              child: accounts[currentUser].icon(context)),
+          Positioned(
+              top: 0,
               right: 0,
               bottom: 0,
               child: SizedBox(
-                width: screenWidth * (8 / 100),
-                height: screenWidth * (8 / 100),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      elevation: 0,
-                      backgroundColor: accounts[currentUser].color),
-                  onPressed:
-                      () {}, //FILL ON PRESS//FILL ON PRESS//FILL ON PRESS
-                  child: Text(accounts[currentUser].userName[0]),
-                ),
-              ))
+                  width: screenWidth * (9 / 100),
+                  height: screenWidth * (9 / 100),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        elevation: 0,
+                        backgroundColor: const Color.fromARGB(0, 0, 0, 0)),
+                    onPressed:
+                        () {}, //FILL ON PRESS//FILL ON PRESS//FILL ON PRESS
+                    child: const Text(""),
+                  )))
         ],
       ));
 }
