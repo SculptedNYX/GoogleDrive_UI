@@ -18,6 +18,16 @@ class _HomeState extends State<Home> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: const Color.fromARGB(255, 195, 229, 254),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15))),
+        child: const Icon(
+          Icons.add,
+          color: Color.fromARGB(255, 41, 45, 48),
+        ),
+      ),
       key: scaffolKey,
       drawer: ClipRRect(
           borderRadius: const BorderRadius.only(

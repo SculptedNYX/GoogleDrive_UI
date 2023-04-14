@@ -122,6 +122,70 @@ Widget elementCreator(context, Item item, index) {
     name = "${name.substring(0, 11)}...";
   }
 
+  if (item.itemType == dir) {
+    return Stack(alignment: Alignment.topCenter, children: [
+      Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: SizedBox(
+              width: screenWidth * (40 / 100),
+              height: screenWidth * (40 / 100) / 1.5,
+              child: Icon(
+                Icons.folder,
+                color: const Color.fromARGB(255, 73, 73, 73),
+                size: screenWidth * (40 / 100) / 1.5,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                const Expanded(child: SizedBox()),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Text(
+                    name,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: screenWidth * (3 / 100)),
+                  ),
+                ),
+                const Expanded(child: SizedBox()),
+                IconButton(
+                  iconSize: screenWidth * (6 / 100),
+                  onPressed: () {
+                    item.recentCount = 3;
+                    showModalBottomSheet(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(15))),
+                        context: context,
+                        builder: (BuildContext context) {
+                          return kebabmenu(context, item);
+                        });
+                  },
+                  icon: const Icon(
+                    Icons.more_vert,
+                    color: Color.fromARGB(255, 41, 45, 48),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+      ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(0, 0, 0, 0), elevation: 0),
+          onPressed: () {},
+          child: SizedBox(
+              width: screenWidth * (40 / 100) / 1.5,
+              height: screenWidth * (40 / 100) / 1.5))
+    ]);
+  }
+
   return (Column(
     children: [
       ClipRRect(

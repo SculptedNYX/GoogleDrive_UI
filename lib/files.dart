@@ -12,6 +12,17 @@ class Item {
   Item(this.name, this.itemType, this.thumbnail);
 }
 
+class Dir extends Item {
+  List<Item> contianedFiles = [];
+  Dir(this.contianedFiles, String name, Icon itemType, String thumbnail)
+      : super(name, itemType, thumbnail);
+}
+
+Icon dir = const Icon(
+  Icons.folder,
+  color: Color.fromARGB(255, 73, 73, 73),
+);
+
 Icon pdf = const Icon(
   Icons.picture_as_pdf,
   color: Color.fromARGB(255, 215, 74, 66),
@@ -27,7 +38,17 @@ Icon mp4 = const Icon(
   color: Color.fromARGB(255, 215, 74, 66),
 );
 
+List<Item> dircomm = [
+  Item("David Austin", png,
+      "https://www.dawsonsgardenworld.com.au/wp-content/uploads/2017/08/David-Austin-Boscobel-..jpg"),
+  Item("Hybrid tea roses", png,
+      "http://www.smithsorchardgardencentre.com/images/products/large/2888.jpg"),
+  Item("boxwood", png,
+      "https://laurieshomefurnishings.com/wp-content/uploads/2020/10/EBD80087_main-01-scaled.jpg"),
+];
+
 List<Item> common = [
+  Dir(dircomm, "flowers", dir, ""),
   Item("Nine", mp4,
       "http://s3.media.squarespace.com/production/465215/5366925/wp-content/uploads/2009/05/9_poster.jpg"),
   Item("SSL certifaces", pdf,

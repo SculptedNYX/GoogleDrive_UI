@@ -102,6 +102,9 @@ class _OfflineState extends State<Offline> {
 }
 
 Widget elementCreator(context, Item item) {
+  if (item.itemType == dir) {
+    return const SizedBox.shrink();
+  }
   double screenWidth = MediaQuery.of(context).size.width;
   String name = item.name;
   if (name.length >= 13) {

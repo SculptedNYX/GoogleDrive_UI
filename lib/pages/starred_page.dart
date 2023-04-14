@@ -72,7 +72,9 @@ Widget elementCreator(context, Item item) {
   if (name.length >= 13) {
     name = "${name.substring(0, 11)}...";
   }
-
+  if (item.itemType == dir) {
+    return const SizedBox.shrink();
+  }
   return (Column(
     children: [
       ClipRRect(

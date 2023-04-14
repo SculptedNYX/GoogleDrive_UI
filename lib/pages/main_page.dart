@@ -104,6 +104,9 @@ Widget featured(List<Item> itemList, context) {
 
 Widget featuredElementCreator(context, Item item) {
   double screenWidth = MediaQuery.of(context).size.width;
+  if (item.itemType == dir) {
+    return const SizedBox.shrink();
+  }
   return Container(
     decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(width: 0.5, color: Colors.grey))),
