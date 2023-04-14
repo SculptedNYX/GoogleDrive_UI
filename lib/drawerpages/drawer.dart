@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../data.dart';
-import '../pages/recent.dart';
+import 'offline.dart';
+import 'recent.dart';
 
 Drawer drawDrawer(context) {
   double screenWidth = MediaQuery.of(context).size.width;
@@ -56,7 +56,10 @@ Drawer drawDrawer(context) {
             "Offline",
             style: TextStyle(fontSize: screenWidth * (4 / 100)),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => const Offline()));
+          },
         ),
         ListTile(
           minVerticalPadding: 1,
@@ -130,5 +133,56 @@ Drawer drawDrawer(context) {
         )
       ],
     ),
+  );
+}
+
+TextStyle logoStyleCreator(Color c, screenWidth) {
+  return TextStyle(
+      color: c,
+      fontWeight: FontWeight.w400,
+      fontSize: screenWidth * (6 / 100),
+      fontFamily: "Poppins-Medium");
+}
+
+Row logo(context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+
+  return Row(
+    children: [
+      RichText(
+          text: TextSpan(
+              style: TextStyle(
+                  color: const Color.fromARGB(255, 73, 73, 73),
+                  fontWeight: FontWeight.w400,
+                  fontSize: screenWidth * (6 / 100),
+                  fontFamily: "Poppins-Medium"),
+              children: <TextSpan>[
+            TextSpan(
+                text: "G",
+                style: logoStyleCreator(
+                    const Color.fromARGB(255, 64, 134, 244), screenWidth)),
+            TextSpan(
+                text: "o",
+                style: logoStyleCreator(
+                    const Color.fromARGB(255, 235, 65, 50), screenWidth)),
+            TextSpan(
+                text: "o",
+                style: logoStyleCreator(
+                    const Color.fromARGB(255, 251, 189, 0), screenWidth)),
+            TextSpan(
+                text: "g",
+                style: logoStyleCreator(
+                    const Color.fromARGB(255, 64, 134, 244), screenWidth)),
+            TextSpan(
+                text: "l",
+                style: logoStyleCreator(
+                    const Color.fromARGB(255, 49, 170, 82), screenWidth)),
+            TextSpan(
+                text: "e ",
+                style: logoStyleCreator(
+                    const Color.fromARGB(255, 235, 65, 50), screenWidth)),
+            const TextSpan(text: "Drive")
+          ]))
+    ],
   );
 }

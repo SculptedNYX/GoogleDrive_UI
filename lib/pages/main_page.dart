@@ -1,7 +1,7 @@
 import 'package:drive_ui/profiles/user.dart';
 import 'package:flutter/material.dart';
-
 import '../files.dart';
+import '../kebab_menu.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -47,12 +47,10 @@ class _MainPage extends State<MainPage> with TickerProviderStateMixin {
               ),
             ),
           ),
-          SizedBox(
-            width: double.maxFinite,
-            height: 300,
+          Expanded(
             child: TabBarView(controller: tabController, children: [
               featured(accounts[currentUser].storage, context),
-              const Text("There")
+              notification(context)
             ]),
           )
         ],
@@ -61,22 +59,127 @@ class _MainPage extends State<MainPage> with TickerProviderStateMixin {
   }
 }
 
-Widget featured(List<Item> itemList, context) {
-  double screenHeight = MediaQuery.of(context).size.height;
-  return ListView(
-    children: [
-      SizedBox(
-        height: double.maxFinite,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: itemList.length >= 10 ? 10 : itemList.length,
-          itemBuilder: (context, index) {
-            return Row(
-              children: [],
-            );
-          },
+Widget notification(context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  return Scaffold(
+    body: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Icon(
+            Icons.notifications,
+            size: screenWidth * (30 / 100),
+            color: const Color.fromARGB(255, 254, 215, 50),
+          ),
         ),
-      )
-    ],
+        Center(
+          child: Text(
+            "No New notifications",
+            style: TextStyle(
+                color: const Color.fromARGB(255, 73, 73, 73),
+                fontWeight: FontWeight.w400,
+                fontSize: screenWidth * (6 / 100),
+                fontFamily: "Poppins-Medium"),
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Widget featured(List<Item> itemList, context) {
+  return Scaffold(
+    body: SizedBox(
+      height: double.maxFinite,
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: itemList.length >= 10 ? 10 : itemList.length,
+        itemBuilder: (context, index) {
+          return featuredElementCreator(context, itemList[index]);
+        },
+      ),
+    ),
+  );
+}
+
+Widget featuredElementCreator(context, Item item) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  return Container(
+    decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(width: 0.5, color: Colors.grey))),
+    child: Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * (11 / 100),
+              vertical: screenWidth * (2 / 100)),
+          child: Row(
+            children: [
+              item.itemType,
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  item.name,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: screenWidth * (4 / 100),
+                      color: const Color.fromARGB(255, 73, 73, 73)),
+                ),
+              ),
+              const Expanded(child: SizedBox()),
+              IconButton(
+                iconSize: screenWidth * (6 / 100),
+                onPressed: () {
+                  item.recentCount = 3;
+                  showModalBottomSheet(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(15))),
+                      context: context,
+                      builder: (BuildContext context) {
+                        return kebabmenu(context, item);
+                      });
+                }, //FILL ON PRESS//FILL ON PRESS//FILL ON PRESS
+                icon: const Icon(
+                  Icons.more_vert,
+                  color: Color.fromARGB(255, 73, 73, 73),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: SizedBox(
+                width: screenWidth * (80 / 100),
+                height: screenWidth * (60 / 100) / 1.5,
+                child: Image.network(
+                  item.thumbnail,
+                  fit: BoxFit.cover,
+                ),
+              )),
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+              left: screenWidth * (11 / 100), bottom: screenWidth * (5 / 100)),
+          child: Row(children: [
+            accounts[currentUser].icon(context),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: screenWidth * (2 / 100)),
+              child: Text(
+                "Last opened ${item.lastOpened}",
+                style: TextStyle(
+                    fontSize: screenWidth * (3 / 100),
+                    color: const Color.fromARGB(255, 73, 73, 73),
+                    fontWeight: FontWeight.w400),
+              ),
+            ),
+          ]),
+        )
+      ],
+    ),
   );
 }

@@ -1,5 +1,5 @@
 import 'package:drive_ui/data.dart';
-import 'package:drive_ui/misc/drawer.dart';
+import 'package:drive_ui/drawerpages/drawer.dart';
 import 'package:drive_ui/profiles/user.dart';
 import 'package:flutter/material.dart';
 
@@ -86,16 +86,16 @@ Widget displayTopBar(context, GlobalKey<ScaffoldState> key) {
           // Right profile button
           Positioned(
               top: 0,
-              right: 2,
+              right: screenWidth * (5 / 100),
               bottom: 0,
               child: accounts[currentUser].icon(context)),
           Positioned(
               top: 0,
-              right: 0,
+              right: screenWidth * (4 / 100),
               bottom: 0,
               child: SizedBox(
-                  width: screenWidth * (9 / 100),
-                  height: screenWidth * (9 / 100),
+                  width: screenWidth * (10 / 100),
+                  height: screenWidth * (10 / 100),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         shape: const CircleBorder(),
