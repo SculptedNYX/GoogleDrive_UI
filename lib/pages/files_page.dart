@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../dir.dart';
 import '../files.dart';
 import '../kebab_menu.dart';
 import '../profiles/user.dart';
@@ -156,7 +157,6 @@ Widget elementCreator(context, Item item, index) {
                 IconButton(
                   iconSize: screenWidth * (6 / 100),
                   onPressed: () {
-                    item.recentCount = 3;
                     showModalBottomSheet(
                         shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.vertical(
@@ -179,7 +179,12 @@ Widget elementCreator(context, Item item, index) {
       ElevatedButton(
           style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(0, 0, 0, 0), elevation: 0),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => DirPage(
+                      dir: item as Dir,
+                    )));
+          },
           child: SizedBox(
               width: screenWidth * (40 / 100) / 1.5,
               height: screenWidth * (40 / 100) / 1.5))
